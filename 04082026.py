@@ -134,23 +134,138 @@ def exp6():
 
     print("\nFuzzy Set:")
 
-    for element, membership in fuzzy_set.items():
+    for eldement, membership in fuzzy_set.items():
         print(f"{element} : {membership}")
 
+## Experiment 7 Implement Union, Intersection, Complement, and Difference operations on fuzzy set. Also create fuzzy relations
+## by cartesian product of any two fuzzy sets and perform min-max composition on any two fuzzy relations.
+
+def exp7():
+    A = {
+        'a': 0.2,
+        'b': 0.7,
+        'c': 0.9
+    }
+
+    B = {
+        'a': 0.6,
+        'b': 0.4,
+        'c': 0.8
+    }
+
+    print("\nFuzzy Set A:", A)
+    print("Fuzzy Set B:", B)
+
+    union = {}
+
+    for x in set(A) | set(B):
+        union[x] = max(A.get(x, 0), B.get(x, 0))
+
+    print("\nUnion:", union)
+    intersection = {}
+
+    for x in set(A) | set(B):
+        intersection[x] = min(A.get(x, 0), B.get(x, 0))
+
+    print("Intersection:", intersection)
+    complement = {}
+
+    for x in A:
+        complement[x] = 1 - A[x]
+
+    print("Complement of A:", complement)
+    difference = {}
+
+    for x in set(A) | set(B):
+        difference[x] = min(A.get(x, 0), 1 - B.get(x, 0))
+
+    print("Difference (A-B):", difference)
+    C = {
+        'x': 0.5,
+        'y': 0.8
+    }
+
+    D = {
+        'p': 0.4,
+        'q': 0.9
+    }
+
+    R1 = {}
+
+    for x in C:
+        for y in D:
+            R1[(x, y)] = min(C[x], D[y])
+
+    print("\nFuzzy Set C:", C)
+    print("Fuzzy Set D:", D)
+    print("Cartesian Product C × D:", R1)
+    R2 = {
+        ('p', 'm'): 0.7,
+        ('p', 'n'): 0.5,
+        ('q', 'm'): 0.6,
+        ('q', 'n'): 0.8
+    }
+
+    print("\nRelation R2:", R2)
+    R3 = {}
+
+    X = set(x for x, y in R1)
+    Y = set(y for x, y in R1)
+    Z = set(y for x, y in R2)
+
+    for x in X:
+        for z in Z:
+
+            values = []
+
+            for y in Y:
+                if (x, y) in R1 and (y, z) in R2:
+                    values.append(
+                        min(R1[(x, y)], R2[(y, z)])
+                    )
+
+            if values:
+                R3[(x, z)] = max(values)
+
+    print("Max-Min Composition R1 o R2:", R3)
 
 def main():
-    print("=========Experiment 1=========");
-    exp1();
-    print("\n=========Experiment 2=========");
-    exp2();
-    print("\n=========Experiment 3=========");
-    exp3();
-    print("\n=========Experiment 4=========");
-    exp4();
-    print("\n=========Experiment 5=========");
-    exp5();
-    print("\n=========Experiment 6=========");
-    exp6();
+    choice = int(input("\nEnter your choice: "))
+    if choice == 1:
+        print("=========Experiment 1=========");
+        exp1();
+    elif choice == 2:
+        print("=========Experiment 2=========");
+        exp2();
+    elif choice == 3:
+        print("=========Experiment 3=========");
+        exp3();
+    elif choice == 4:
+        print("=========Experiment 4=========");
+        exp4();
+    elif choice == 5:
+        print("=========Experiment 5=========");
+        exp5();
+    elif choice == 6:
+        print("=========Experiment 6=========");
+        exp6();
+    elif choice == 7:
+        print("=========Experiment 7=========");
+        exp7();
+    # el
+    # print("\n=========Experiment 2=========");
+    # exp2();
+    # print("\n=========Experiment 3=========");
+    # exp3();
+    # print("\n=========Experiment 4=========");
+    # exp4();
+    # print("\n=========Experiment 5=========");
+    # exp5();
+    # print("\n=========Experiment 6=========");
+    # exp6();
+    # print("\n=========Experiment 7=========");
+    # exp7();
+
 
 if __name__ == "__main__":
     main()
