@@ -134,7 +134,7 @@ def exp6():
 
     print("\nFuzzy Set:")
 
-    for eldement, membership in fuzzy_set.items():
+    for element, membership in fuzzy_set.items():
         print(f"{element} : {membership}")
 
 ## Experiment 7 Implement Union, Intersection, Complement, and Difference operations on fuzzy set. Also create fuzzy relations
