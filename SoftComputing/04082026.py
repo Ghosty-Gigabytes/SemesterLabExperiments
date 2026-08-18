@@ -134,7 +134,7 @@ def exp6():
 
     print("\nFuzzy Set:")
 
-    for element, membership in fuzzy_set.items():
+    for eleeement, membership in fuzzy_set.items():
         print(f"{element} : {membership}")
 
 ## Experiment 7 Implement Union, Intersection, Complement, and Difference operations on fuzzy set. Also create fuzzy relations
@@ -229,6 +229,68 @@ def exp7():
 
     print("Max-Min Composition R1 o R2:", R3)
 
+## Experiment 8: Create a perceptron with an appropriate number of inputs and outputs.
+## Train it using a fixed increment learning algorithm until no change in weight is required
+
+def exp8():
+    X = [
+        [0,0],
+        [0,1],
+        [1,0],
+        [1,1]
+    ]
+
+    T = [0,0,0,1]
+    w=[0,0]
+    b=0
+    eta=1
+    epoch=0
+
+    while True:
+        epoch+=1;
+        oldW = w.copy()
+        oldB = b
+
+        print("\nEpoch:", epoch)
+
+        for i in range (len(X)):
+            net = w[0] * X[i][0] + w[1] * X[i][1] + b
+            if net > 0:
+                y = 1;
+            else:
+                y = 0;
+
+            error = T[i] -y;
+
+            w[0] = w[0] + eta * error * X[i][0]
+            w[1] = w[1] + eta * error * X[i][1]
+            b = b+ eta * error
+
+            print(
+                "Input:", X[i],
+                "Target:", T[i],
+                "Output:", y,
+                "Weights:", w,
+                "Bias:", b
+            )
+        if w==oldW and b==oldB:
+            break
+    print ("\nTraining Complete")
+    print("Final weights:", w)
+    print("Final bias:", b)
+
+    print("\nTesting")
+
+    for i in range(len(X)):
+        net = w[0] * X[i][0] + w[1] * X[i][1] + b
+        if net > 0:
+            y = 1;
+        else:
+            y =0;
+
+        print(X[i], ">", y);
+
+
 def main():
     choice = int(input("\nEnter your choice: "))
     if choice == 1:
@@ -252,6 +314,9 @@ def main():
     elif choice == 7:
         print("=========Experiment 7=========");
         exp7();
+    elif choice == 8:
+        print("=========Experiment 8=========");
+        exp8();
     # el
     # print("\n=========Experiment 2=========");
     # exp2();
@@ -266,6 +331,6 @@ def main():
     # print("\n=========Experiment 7=========");
     # exp7();
 
-
+##
 if __name__ == "__main__":
     main()
