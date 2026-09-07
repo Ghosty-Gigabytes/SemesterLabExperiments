@@ -290,6 +290,145 @@ def exp8():
 
         print(X[i], ">", y);
 
+## Experiment 11: Write a program to implement Hebbs Rule with AND Gate
+def exp11():
+    inputs = [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ]
+    desired = [0, 0, 0, 1]
+
+    w1 = 0
+    w2 = 0
+    b = 0
+
+    for i in range(len(inputs)):
+        x1 = inputs[i][0]
+        x2 = inputs[i][1]
+        y = desired[i]
+
+        w1 = w1 + x1 * y
+        w2 = w2 + x2 * y
+        b = b + y
+
+        print("Input:", x1, x2, "Output:", y)
+        print("w1 =", w1, "w2 =", w2, "b =", b)
+
+    print("\nFinal weights:")
+    print("w1 =", w1)
+    print("w2 =", w2)
+    print("Bias =", b)
+
+## Experiment 12: Write a program to implement Delta Rule with AND Gate
+def exp12():
+    inputs = [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ]
+    desired = [0, 1, 1, 1]
+
+    w1 = 0
+    w2 = 0
+    learning_rate = 0.1
+    epochs = 10
+    b = 0;
+
+    for epoch in range(epochs):
+        print("Epoch:", epoch + 1)
+        error = 0;
+        for i in range(len(inputs)):
+            x1 = inputs[i][0]
+            x2 = inputs[i][1]
+            d = desired[i]
+
+            y = w1 * x1 + w2 * x2 + b;
+            error = d - y
+
+            w1 = w1 + learning_rate * error * x1
+            w2 = w2 + learning_rate * error * x2
+            b = b + learning_rate * error
+
+        print("w1 =", w1)
+        print("w2 =", w2)
+        print("error=", error)
+        print("b=", b)
+        print()
+
+    print("Final Weights:")
+    print("w1 =", w1)
+    print("w2 =", w2)
+    print("b=", b)
+
+## Experiment 9: Write a program to implement Linear Regression
+def exp9():
+    x = [1, 2, 3, 4, 5]
+    y = [2, 4, 5, 4, 5]
+
+    n = len(x)
+
+    sum_x = sum(x)
+    sum_y = sum(y)
+
+    sum_xy = sum(x[i] * y[i] for i in range(n))
+    sum_x2 = sum(x[i] * x[i] for i in range(n))
+
+    b1 = (n * sum_xy - sum_x * sum_y) / \
+         (n * sum_x2 - sum_x * sum_x)
+
+    b0 = (sum_y - b1 * sum_x) / n
+
+    print("Slope (b1) =", b1)
+    print("Intercept (b0) =", b0)
+
+    print("Regression equation:")
+    print("y =", b0, "+", b1, "* x")
+    print("\nPredicted values:")
+
+    for value in x:
+        prediction = b0 + b1 * value
+        print("x =", value, "y =", prediction)
+
+
+def exp10():
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from sklearn.linear_model import LinearRegression
+
+    X = np.array([
+        [1, 2, 5],
+        [2, 5, 3],
+        [3, 1, 8],
+        [4, 6, 4],
+        [5, 3, 9],
+        [6, 8, 2],
+        [7, 4, 7],
+        [8, 7, 5],
+        [9, 2, 10],
+        [10, 9, 3]
+    ])
+
+    y = np.array([12, 15, 14, 20, 22, 25, 24, 30, 28, 34])
+
+    model = LinearRegression().fit(X, y)
+
+    print("Coefficients:", model.coef_)
+    print("Intercept:", model.intercept_)
+    print("Prediction:", model.predict([[6, 5, 6]])[0])
+
+    yp = model.predict(X)
+
+    plt.scatter(y, yp)
+    plt.plot([y.min(), y.max()], [y.min(), y.max()])
+    plt.xlabel("Actual Y")
+    plt.ylabel("Predicted Y")
+    plt.title("Multiple Linear Regression")
+    plt.grid()
+    plt.show()
+
 
 def main():
     choice = int(input("\nEnter your choice: "))
@@ -317,6 +456,18 @@ def main():
     elif choice == 8:
         print("=========Experiment 8=========");
         exp8();
+    elif choice == 9:
+        print("=========Experiment 9=========");
+        exp9();
+    elif choice == 10:
+        print("=========Experiment 10=========");
+        exp10();
+    elif choice == 11:
+        print("=========Experiment 11=========");
+        exp11();
+    elif choice == 12:
+        print("=========Experiment 12=========");
+        exp12();
     # el
     # print("\n=========Experiment 2=========");
     # exp2();
