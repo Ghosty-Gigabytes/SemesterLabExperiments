@@ -365,32 +365,37 @@ def exp12():
 
 ## Experiment 9: Write a program to implement Linear Regression
 def exp9():
-    x = [1, 2, 3, 4, 5]
-    y = [2, 4, 5, 4, 5]
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from sklearn.linear_model import LinearRegression
 
-    n = len(x)
+    x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+    y = np.array([2, 3, 5, 6, 10, 9, 12, 11, 15, 18, 23, 23, 28])
 
-    sum_x = sum(x)
-    sum_y = sum(y)
+    x_mean = np.mean(x)
+    y_mean = np.mean(y)
 
-    sum_xy = sum(x[i] * y[i] for i in range(n))
-    sum_x2 = sum(x[i] * x[i] for i in range(n))
+    m = np.sum((x - x_mean)(y - y_mean)) / np.sum((x - x_mean) * 2)
+    c = y_mean - m * x_mean
 
-    b1 = (n * sum_xy - sum_x * sum_y) / \
-         (n * sum_x2 - sum_x * sum_x)
+    y_pred = m * x + c
 
-    b0 = (sum_y - b1 * sum_x) / n
+    print("Slope =", m)
+    print("Intercept =", c)
+    print("Equation: y =", round(m, 2), "x +", round(c, 2))
 
-    print("Slope (b1) =", b1)
-    print("Intercept (b0) =", b0)
+    plt.figure(figsize=(8, 5))
 
-    print("Regression equation:")
-    print("y =", b0, "+", b1, "* x")
-    print("\nPredicted values:")
+    plt.scatter(x, y, color="black", s=70, label="INPUT")
+    plt.plot(x, y_pred, color="blue", linewidth=2, label="Regression Line")
 
-    for value in x:
-        prediction = b0 + b1 * value
-        print("x =", value, "y =", prediction)
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.title("Linear Regression with 10 Data Points")
+
+    plt.grid(True)
+    plt.legend()
+    plt.show()
 
 
 def exp10():
