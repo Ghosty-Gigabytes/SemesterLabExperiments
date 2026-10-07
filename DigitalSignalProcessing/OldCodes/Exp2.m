@@ -1,4 +1,4 @@
-% Experiment 1: Implement basic arithmatic, matrix and array operations in matlab
+% Experiment 2: Implement basic arithmatic, matrix and array operations in matlab
 clc;
 clear;
 close all;
