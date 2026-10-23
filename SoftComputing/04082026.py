@@ -434,6 +434,58 @@ def exp10():
     plt.grid()
     plt.show()
 
+## Experiment 14:To implement an Artificial Neural Network (ANN) using a single-layer perceptron without backpropagation and verify its operation using the AND logic gate.
+def exp14():
+    inputs = [
+        [0, 0],
+        [0, 1],
+        [1, 0],
+        [1, 1]
+    ]
+
+    targets = [0, 0, 0, 1]
+
+    w1 = 0.0
+    w2 = 0.0
+    bias = 0.0
+
+    learning_rate = 0.1
+    epochs = 100
+
+    def activation(net):
+        return 1 if net >= 0 else 0
+
+    for epoch in range(epochs):
+        errors = 0
+
+        for x, target in zip(inputs, targets):
+            net = w1 * x[0] + w2 * x[1] + bias
+            output = activation(net)
+
+            error = target - output
+
+            w1 += learning_rate * error * x[0]
+            w2 += learning_rate * error * x[1]
+            bias += learning_rate * error
+
+            if error != 0:
+                errors += 1
+
+        if errors == 0:
+            print("Converged at epoch", epoch + 1)
+            break
+
+    print("\nAND Gate Results")
+    print("X1 X2 Target Output")
+
+    for x, target in zip(inputs, targets):
+        net = w1 * x[0] + w2 * x[1] + bias
+        output = activation(net)
+        print(x[0], x[1], " ", target, "    ", output)
+
+    print("\nFinal weights:", w1, w2)
+    print("Final bias:", bias)
+
 
 def main():
     choice = int(input("\nEnter your choice: "))
@@ -473,20 +525,9 @@ def main():
     elif choice == 12:
         print("=========Experiment 12=========");
         exp12();
-    # el
-    # print("\n=========Experiment 2=========");
-    # exp2();
-    # print("\n=========Experiment 3=========");
-    # exp3();
-    # print("\n=========Experiment 4=========");
-    # exp4();
-    # print("\n=========Experiment 5=========");
-    # exp5();
-    # print("\n=========Experiment 6=========");
-    # exp6();
-    # print("\n=========Experiment 7=========");
-    # exp7();
-
+    elif choice == 14:
+        print("=========Experiment 14=========");
+        exp14();
 ##
 if __name__ == "__main__":
     main()
