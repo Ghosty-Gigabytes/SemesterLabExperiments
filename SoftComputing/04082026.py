@@ -487,6 +487,86 @@ def exp14():
     print("Final bias:", bias)
 
 
+## Experiment 13: Implement the Travelling Salesman Problem using Genetic Algorithm
+def exp13():
+    import random
+
+    # Distance matrix between 5 cities
+    distance = [
+        [0, 10, 15, 20, 25],
+        [10, 0, 35, 25, 17],
+        [15, 35, 0, 30, 20],
+        [20, 25, 30, 0, 18],
+        [25, 17, 20, 18, 0]
+    ]
+
+    cities = list(range(len(distance)))
+    population_size = 50
+    generations = 200
+    mutation_rate = 0.1
+
+    def fitness(route):
+        total = 0
+        for i in range(len(route)):
+            total += distance[route[i]][route[(i + 1) % len(route)]]
+        return 1 / total
+
+    def create_route():
+        return random.sample(cities, len(cities))
+
+    def crossover(parent1, parent2):
+        start, end = sorted(random.sample(range(len(cities)), 2))
+        child = [None] * len(cities)
+        child[start:end] = parent1[start:end]
+
+        remaining = [city for city in parent2 if city not in child]
+        j = 0
+
+        for i in range(len(child)):
+            if child[i] is None:
+                child[i] = remaining[j]
+                j += 1
+
+        return child
+
+    def mutate(route):
+        if random.random() < mutation_rate:
+            i, j = random.sample(range(len(route)), 2)
+            route[i], route[j] = route[j], route[i]
+        return route
+
+    population = [create_route() for _ in range(population_size)]
+
+    for generation in range(generations):
+        population.sort(key=fitness, reverse=True)
+
+        new_population = population[:2]  # Keep the best routes
+
+        while len(new_population) < population_size:
+            parent1, parent2 = random.choices(
+                population[:population_size // 2],
+                k=2
+            )
+
+            child = crossover(parent1, parent2)
+            child = mutate(child)
+            new_population.append(child)
+
+        population = new_population
+
+    best_route = max(population, key=fitness)
+
+    total_distance = sum(
+        distance[best_route[i]][best_route[(i + 1) % len(best_route)]]
+        for i in range(len(best_route))
+    )
+
+    print("\nBest Route:")
+    print(" -> ".join(str(city + 1) for city in best_route)
+          + " -> " + str(best_route[0] + 1))
+    print("Minimum Distance Found:", total_distance)
+
+
 def main():
     choice = int(input("\nEnter your choice: "))
     if choice == 1:
@@ -525,6 +605,9 @@ def main():
     elif choice == 12:
         print("=========Experiment 12=========");
         exp12();
+    elif choice == 13:
+        print("=========Experiment 13=========")
+        exp13()
     elif choice == 14:
         print("=========Experiment 14=========");
         exp14();
